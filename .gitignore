@@ -1,0 +1,29 @@
+# Roblox Studio
+*.rbxl.lock
+*.rbxlx.lock
+
+# Roblox Build
+build/
+out/
+
+# Rojo
+*.project.json.lock
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporary
+temp/
+tmp/
