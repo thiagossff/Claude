@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Web</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="calculadora">
+            <div class="display">
+                <div class="expressao" id="expressao"></div>
+                <div class="resultado" id="resultado">0</div>
+            </div>
+
+            <div class="botoes">
+                <button class="btn operador" onclick="limpar()">C</button>
+                <button class="btn operador" onclick="apagarUltimo()">⌫</button>
+                <button class="btn operador" onclick="adicionarValor('(')">(</button>
+                <button class="btn operador" onclick="adicionarValor(')')">)</button>
+
+                <button class="btn numero" onclick="adicionarValor('7')">7</button>
+                <button class="btn numero" onclick="adicionarValor('8')">8</button>
+                <button class="btn numero" onclick="adicionarValor('9')">9</button>
+                <button class="btn operador" onclick="adicionarValor('/')">/</button>
+
+                <button class="btn numero" onclick="adicionarValor('4')">4</button>
+                <button class="btn numero" onclick="adicionarValor('5')">5</button>
+                <button class="btn numero" onclick="adicionarValor('6')">6</button>
+                <button class="btn operador" onclick="adicionarValor('*')">*</button>
+
+                <button class="btn numero" onclick="adicionarValor('1')">1</button>
+                <button class="btn numero" onclick="adicionarValor('2')">2</button>
+                <button class="btn numero" onclick="adicionarValor('3')">3</button>
+                <button class="btn operador" onclick="adicionarValor('-')">-</button>
+
+                <button class="btn numero" onclick="adicionarValor('0')">0</button>
+                <button class="btn numero" onclick="adicionarValor('.')">.</button>
+                <button class="btn igual" onclick="calcular()">=</button>
+                <button class="btn operador" onclick="adicionarValor('+')">+</button>
+            </div>
+        </div>
+
+        <div class="creditos">
+            Calculadora Web em Python/Flask
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
