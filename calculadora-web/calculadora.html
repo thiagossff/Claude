@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Web</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .calculadora {
+            background: linear-gradient(145deg, #1e1e2f, #2a2a40);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .display {
+            background: linear-gradient(145deg, #0a0a15, #12121f);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: right;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .expressao {
+            color: #888;
+            font-size: 1.2rem;
+            min-height: 30px;
+            word-wrap: break-word;
+            margin-bottom: 5px;
+        }
+
+        .resultado {
+            color: #fff;
+            font-size: 2.5rem;
+            font-weight: 300;
+            word-wrap: break-word;
+        }
+
+        .botoes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .btn {
+            width: 70px;
+            height: 70px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .numero {
+            background: linear-gradient(145deg, #2a2a40, #353550);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+        }
+
+        .numero:hover {
+            background: linear-gradient(145deg, #353550, #404060);
+        }
+
+        .operador {
+            background: linear-gradient(145deg, #3a3a5a, #4a4a70);
+            color: #e94560;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+        }
+
+        .operador:hover {
+            background: linear-gradient(145deg, #4a4a70, #5a5a80);
+        }
+
+        .igual {
+            background: linear-gradient(145deg, #e94560, #ff6b6b);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+        }
+
+        .igual:hover {
+            background: linear-gradient(145deg, #ff6b6b, #ff8080);
+            box-shadow: 0 8px 25px rgba(233, 69, 96, 0.6), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+        }
+
+        .creditos {
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .erro {
+            animation: shake 0.3s ease-in-out;
+            color: #e94560 !important;
+        }
+
+        @media (max-width: 400px) {
+            .calculadora { padding: 15px; }
+            .btn { width: 60px; height: 60px; font-size: 1.3rem; }
+            .resultado { font-size: 2rem; }
+            .botoes { gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="calculadora">
+            <div class="display">
+                <div class="expressao" id="expressao"></div>
+                <div class="resultado" id="resultado">0</div>
+            </div>
+
+            <div class="botoes">
+                <button class="btn operador" onclick="limpar()">C</button>
+                <button class="btn operador" onclick="apagarUltimo()">&#9003;</button>
+                <button class="btn operador" onclick="adicionarValor('(')">(</button>
+                <button class="btn operador" onclick="adicionarValor(')')">)</button>
+
+                <button class="btn numero" onclick="adicionarValor('7')">7</button>
+                <button class="btn numero" onclick="adicionarValor('8')">8</button>
+                <button class="btn numero" onclick="adicionarValor('9')">9</button>
+                <button class="btn operador" onclick="adicionarValor('/')">÷</button>
+
+                <button class="btn numero" onclick="adicionarValor('4')">4</button>
+                <button class="btn numero" onclick="adicionarValor('5')">5</button>
+                <button class="btn numero" onclick="adicionarValor('6')">6</button>
+                <button class="btn operador" onclick="adicionarValor('*')">×</button>
+
+                <button class="btn numero" onclick="adicionarValor('1')">1</button>
+                <button class="btn numero" onclick="adicionarValor('2')">2</button>
+                <button class="btn numero" onclick="adicionarValor('3')">3</button>
+                <button class="btn operador" onclick="adicionarValor('-')">−</button>
+
+                <button class="btn numero" onclick="adicionarValor('0')">0</button>
+                <button class="btn numero" onclick="adicionarValor('.')">.</button>
+                <button class="btn igual" onclick="calcular()">=</button>
+                <button class="btn operador" onclick="adicionarValor('+')">+</button>
+            </div>
+        </div>
+
+        <div class="creditos">
+            Calculadora Web - Python/Flask
+        </div>
+    </div>
+
+    <script>
+        let expressaoAtual = '';
+        let resultadoExibido = false;
+
+        const expressaoEl = document.getElementById('expressao');
+        const resultadoEl = document.getElementById('resultado');
+
+        function adicionarValor(valor) {
+            if (resultadoExibido && !isNaN(valor)) {
+                expressaoAtual = '';
+                resultadoExibido = false;
+            }
+            if (resultadoExibido && isNaN(valor)) {
+                expressaoAtual = resultadoEl.textContent;
+                resultadoExibido = false;
+            }
+            expressaoAtual += valor;
+            atualizarDisplay();
+        }
+
+        function limpar() {
+            expressaoAtual = '';
+            resultadoEl.textContent = '0';
+            expressaoEl.textContent = '';
+            resultadoExibido = false;
+        }
+
+        function apagarUltimo() {
+            expressaoAtual = expressaoAtual.slice(0, -1);
+            atualizarDisplay();
+        }
+
+        function atualizarDisplay() {
+            expressaoEl.textContent = expressaoAtual;
+            if (expressaoAtual === '') {
+                resultadoEl.textContent = '0';
+            }
+        }
+
+        function calcular() {
+            if (!expressaoAtual) return;
+            try {
+                // Validar expressão
+                const permitidos = /^[0-9+\-*/.() ]+$/;
+                if (!permitidos.test(expressaoAtual)) {
+                    throw new Error('Expressão inválida');
+                }
+
+                let resultado = eval(expressaoAtual);
+
+                if (typeof resultado === 'number' && !Number.isInteger(resultado)) {
+                    resultado = parseFloat(resultado.toFixed(10));
+                }
+
+                expressaoEl.textContent = expressaoAtual + ' =';
+                resultadoEl.textContent = resultado;
+                expressaoAtual = resultado.toString();
+                resultadoExibido = true;
+            } catch (error) {
+                mostrarErro('Erro');
+            }
+        }
+
+        function mostrarErro(mensagem) {
+            resultadoEl.textContent = mensagem;
+            resultadoEl.classList.add('erro');
+            setTimeout(() => {
+                resultadoEl.classList.remove('erro');
+                resultadoEl.textContent = expressaoAtual || '0';
+            }, 1500);
+        }
+
+        document.addEventListener('keydown', (event) => {
+            const key = event.key;
+            if (/[0-9]/.test(key)) adicionarValor(key);
+            else if (['+', '-', '*', '/', '.', '(', ')'].includes(key)) adicionarValor(key);
+            else if (key === 'Enter') { event.preventDefault(); calcular(); }
+            else if (key === 'Backspace') apagarUltimo();
+            else if (key === 'Escape') limpar();
+        });
+    </script>
+</body>
+</html>
